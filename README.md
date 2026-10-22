@@ -1,5 +1,3 @@
-Worked for 17s
-
 # CSC2103: Algorithmic Problem Solving
 
 **Three classic problems. Three different ways to solve them.**

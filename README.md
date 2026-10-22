@@ -1,74 +1,46 @@
-# CSC2103 Algorithmic Problem-Solving Project
+Worked for 17s
 
-This repository contains three console-based Python programs developed for the CSC2103 Data Structures and Algorithms group project. Each program demonstrates a different algorithmic approach through manual implementation, user input, validation, and clearly formatted output.
+# CSC2103: Algorithmic Problem Solving
 
-## Selected Problems
+**Three classic problems. Three different ways to solve them.**
 
-| Problem | Algorithmic approach | Selected solution |
+This repository contains three Python command-line programs built for our CSC2103 Data Structures and Algorithms group project. Each explores a different problem-solving strategy: making a greedy choice, building on smaller solutions, or finding a practical route when the perfect one is harder to calculate.
+
+The algorithms are implemented manually, with user input, validation, and step-by-step results. No third-party packages are needed.
+
+## What's inside?
+
+| Problem | Approach | The goal |
 | --- | --- | --- |
-| 1 | Greedy algorithm | Activity Selection Problem |
-| 2 | Dynamic programming | 0/1 Knapsack Problem |
-| 3 | Heuristic algorithm | Travelling Salesman Problem using the Nearest Neighbour heuristic |
+| **Activity Selection** | Greedy algorithm | Fit as many non-overlapping activities as possible into a schedule |
+| **0/1 Knapsack** | Dynamic programming | Maximise the value of selected items without exceeding a weight limit |
+| **Travelling Salesman** | Nearest Neighbour heuristic | Find a short round trip through a set of cities |
 
-## Problem 1: Activity Selection
+### 01. Activity Selection
 
-The Activity Selection program finds the maximum number of non-overlapping activities that can be completed by one person or resource.
+Say you have several activities that overlap. Which ones should you choose to fit in the most?
 
-The program first sorts all activities by their finish times using a manually implemented selection sort. It then makes the greedy choice of selecting the activity that finishes earliest. Each remaining activity is selected only if its start time is at or after the finish time of the last selected activity.
+The program sorts activities by finish time using a **manually implemented selection sort**. It then works through the list, choosing an activity whenever it starts at or after the previous selection has finished. The result shows the sorted activities, the ones selected, and how many fit.
 
-The program displays:
+This is a **greedy algorithm**: choosing the earliest finishing activity leaves as much room as possible for what comes next.
 
-- All activities sorted by finish time
-- The selected non-overlapping activities
-- The maximum number of activities that can be completed
+### 02. 0/1 Knapsack
 
-## Problem 2: 0/1 Knapsack
+You have a bag with limited capacity and a collection of items, each with a weight and value. The challenge is finding the most valuable combination. You either take an item or leave it. There's no splitting it.
 
-The 0/1 Knapsack program selects items that produce the highest total value without exceeding the knapsack's weight capacity. Each item can be selected once or not selected at all.
+The program uses **dynamic programming** to compare those two choices for each item and available capacity. It builds a table of results, then traces backwards to reveal the chosen items, their total weight, and the maximum value.
 
-The program uses dynamic programming to build a table of smaller subproblem results. For each item and capacity, it compares the value obtained by including the item with the value obtained by excluding it. It then works backwards through the completed table to identify the selected items.
+### 03. Travelling Salesman
 
-The program displays:
+What's a reasonably short route that visits every city once and gets you back to where you started?
 
-- The completed dynamic-programming table
-- The selected items and their weights and values
-- The total selected weight
-- The maximum obtainable value
+This version uses the **Nearest Neighbour heuristic**. From the chosen starting city, it repeatedly visits the closest unvisited city before returning home. You can follow every leg of the journey and see the final route and distance.
 
-## Problem 3: Travelling Salesman Problem
+It's quick to calculate, but **the shortest-looking next step doesn't always produce the shortest overall tour**. Changing the starting city can change the result, too.
 
-The Travelling Salesman program uses the Nearest Neighbour heuristic to find an efficient route that visits every city once and returns to the starting city.
+## Run the programs
 
-Starting from the city chosen by the user, the algorithm repeatedly travels to the nearest unvisited city. After all cities have been visited, it returns to the starting city. This heuristic finds a route efficiently, but it does not always guarantee the shortest possible route. The result may also change when a different starting city is selected.
-
-The program displays:
-
-- Each travel step and its distance
-- The complete route
-- The total distance travelled
-
-## Repository Files
-
-| File | Purpose |
-| --- | --- |
-| `Problem1_activity_selection(1).py` | Greedy solution for the Activity Selection Problem |
-| `Problem2_knapsack.py` | Dynamic-programming solution for the 0/1 Knapsack Problem |
-| `Problem3_nearest_neighbour.py` | Nearest Neighbour heuristic for the Travelling Salesman Problem |
-| `README.md` | Project overview and instructions |
-
-## Requirements
-
-- Python 3
-- A terminal or an editor with a Python terminal, such as Visual Studio Code
-
-No third-party packages are required.
-
-## Running the Programs
-
-1. Download or clone the repository.
-2. Open the project folder in Visual Studio Code.
-3. Open the integrated terminal.
-4. Run the required program using one of the following commands:
+All you need is **Python 3** and a terminal. Download or clone the repository, open its folder, and run whichever problem you'd like to try:
 
 ```bash
 python "Problem1_activity_selection(1).py"
@@ -76,80 +48,69 @@ python Problem2_knapsack.py
 python Problem3_nearest_neighbour.py
 ```
 
-On systems where `python` refers to Python 2, use `python3` instead.
+On systems where `python` points to Python 2, use `python3` instead. Each program prompts you for its inputs and asks you to correct invalid entries.
 
-## Sample Test Cases
+## Example test cases
 
-### Activity Selection
+<details>
+<summary><strong>Activity Selection</strong></summary>
 
-Activities entered as `(start time, finish time)`:
-
-```text
-Activity 1: (1, 2)
-Activity 2: (3, 4)
-Activity 3: (0, 6)
-Activity 4: (5, 7)
-Activity 5: (8, 9)
-Activity 6: (5, 9)
-```
-
-Expected result: Activities 1, 2, 4, and 5 are selected. The maximum number of activities is 4.
-
-### 0/1 Knapsack
+Enter these activities as `(start, finish)`:
 
 ```text
-Knapsack capacity: 5
-
-Camera: weight 2, value 3
-Laptop: weight 3, value 4
-Book: weight 4, value 5
-Tablet: weight 5, value 8
+1: (1, 2)    2: (3, 4)    3: (0, 6)
+4: (5, 7)    5: (8, 9)    6: (5, 9)
 ```
 
-Expected result: The Tablet is selected. The total weight is 5 and the maximum value is 8.
+**Expected:** Activities 1, 2, 4, and 5. Maximum: **4 activities**.
 
-### Travelling Salesman Problem
+</details>
+
+<details>
+<summary><strong>0/1 Knapsack</strong></summary>
+
+Set the capacity to `5`:
+
+| Item | Weight | Value |
+| --- | ---: | ---: |
+| Camera | 2 | 3 |
+| Laptop | 3 | 4 |
+| Book | 4 | 5 |
+| Tablet | 5 | 8 |
+
+**Expected:** Tablet selected. Total weight: **5**. Maximum value: **8**.
+
+</details>
+
+<details>
+<summary><strong>Travelling Salesman</strong></summary>
+
+Use cities `A, B, C, D`, starting at `A`, with these symmetric distances in kilometres:
 
 ```text
-Cities: A, B, C, D
-Starting city: A
-
-A-B: 10 km    A-C: 15 km    A-D: 20 km
-B-C: 35 km    B-D: 25 km    C-D: 30 km
+A-B: 10    A-C: 15    A-D: 20
+B-C: 35    B-D: 25    C-D: 30
 ```
 
-Expected route: `A -> B -> D -> C -> A`
+**Expected:** `A -> B -> D -> C -> A`, covering **80 km**.
 
-Expected total distance: `80 km`
+</details>
 
-## Input Validation
+## Complexity and trade-offs
 
-The programs check the user's input before processing it:
-
-- Activity counts, item counts, capacities, weights, and values must meet their required integer limits.
-- Every activity's finish time must be greater than its start time.
-- Item names and city names cannot be empty.
-- City names must be unique.
-- Distances must be positive numbers.
-- The selected starting city must be one of the available cities.
-
-Invalid input produces an explanatory message and asks the user to try again.
-
-## Time and Space Complexity
-
-| Program | Time complexity | Space complexity | Main reason |
+| Problem | Time | Space | Why |
 | --- | --- | --- | --- |
-| Activity Selection | `O(n^2)` | `O(n)` | Manual selection sort dominates the `O(n)` greedy selection pass |
-| 0/1 Knapsack | `O(nC)` | `O(nC)` | A table is built for `n` items and capacity `C` |
-| Nearest Neighbour TSP | `O(n^2)` | `O(n^2)` | Each city searches the remaining cities, and all distances are stored in a matrix |
+| Activity Selection | `O(n²)` | `O(n)` | Manual selection sort takes the most time |
+| 0/1 Knapsack | `O(nC)` | `O(nC)` | Stores results for `n` items and capacities up to `C` |
+| Nearest Neighbour TSP | `O(n²)` | `O(n²)` | Checks remaining cities and stores a distance matrix |
 
-## Limitations
+The knapsack approach finds the best combination for the given integer inputs, but its table grows with the capacity. Nearest Neighbour is faster to work through than exhaustive route search, though it **doesn't guarantee the globally shortest route**.
 
-- Activity Selection assumes that only one activity can take place at a time.
-- The 0/1 Knapsack implementation uses positive integer weights, values, and capacity. Its memory usage increases as the capacity grows.
-- The Nearest Neighbour program assumes positive, symmetric distances between every pair of cities.
-- Nearest Neighbour is a heuristic, so its route may not be globally optimal.
+## A few implementation notes
 
-## Implementation Notes
+- The code uses **Python 3** without external sorting, graph, or optimisation libraries.
+- Functions separate input handling, algorithm logic, and output.
+- Input checks cover valid counts and capacities, activity times, item details, unique non-empty city names, positive distances, and the selected starting city.
+- Activity Selection assumes one activity at a time; Knapsack uses positive integer weights and values; TSP assumes complete, symmetric distances between cities.
 
-The core algorithms are implemented manually without sorting, graph, optimization, or machine-learning libraries. The code is divided into functions for input, processing, and output to keep each program readable, reusable, and easy to test.
+The focus of this project is understanding **why** each approach works, what it produces, and where its limits are.
